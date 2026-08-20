@@ -1,10 +1,18 @@
 # SPRINT 0: INFO104
 
-## Prototipo: "Pomodoro Tracker"
+## Grupo 01: "Pomodoro Tracker"
 
-### Sebastian Burgos Maldonado, Grupo 1
+### Prototipo de Sebastian Burgos Maldonado
 
+Para ver la pagina, clonar el repositorio :
+```
+git clone https://github.com/Louwz777/pomodoro_tracker.git
+```
 
+ y ejecuta :
+```
+npm run dev
+```
 
 TODO:
 - [ ] Mejorar interfaz de usuario
