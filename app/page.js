@@ -1,69 +1,208 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
+  const [studyMin, setStudyMin] = useState(25);
+  const [breakMin, setBreakMin] = useState(5);
+  const [rounds, setRounds] = useState(4);
+
+  const [secondsLeft, setSecondsLeft] = useState(25 * 60);
+  const [isRunning, setIsRunning] = useState(false);
+  const [phase, setPhase] = useState("study"); // "study" | "break"
+  const [currentRound, setCurrentRound] = useState(1);
+  const [finished, setFinished] = useState(false);
+
+  const intervalRef = useRef(null);
+
+  // Campana al cambiar de estado (estudio-descanso o descanso-estudio)
+  function playBell() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.value = 830;
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 1);
+  }
+
+  // Campana de la cuenta regresiva para los últimos 5 segundos de descanso
+  function playTick() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "square";
+    osc.frequency.value = 600;
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.15);
+  }
+
+  // Flash al fondo, luego cambia al color original
+  function flashBackground() {
+    document.body.style.background = "#505069ff";
+    setTimeout(() => {
+      document.body.style.background = "#1a1a2e";
+    }, 300);
+  }
+
+  // Format seconds to mm:ss
+  function fmt(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  }
+
+  // Tick
+  useEffect(() => {
+    if (!isRunning) return;
+
+    intervalRef.current = setInterval(() => {
+      setSecondsLeft((prev) => {
+        // Sonido de la cuenta regresiva en los últimos 5 segundos de descanso antes del siguiente estudio
+        if (phase === "break" && prev <= 6 && prev > 1 && currentRound < rounds) {
+          playTick();
+        }
+
+        if (prev <= 1) {
+          clearInterval(intervalRef.current);
+
+          if (phase === "study") {
+            // Termina el estudio → comienza el descanso
+            playBell();
+            flashBackground();
+            setPhase("break");
+            setIsRunning(true);
+            return breakMin * 60;
+          } else {
+            // Termina el descanso → siguiente ronda o termina
+            if (currentRound >= rounds) {
+              playBell();
+              flashBackground();
+              setFinished(true);
+              setIsRunning(false);
+              return 0;
+            }
+            playBell();
+            flashBackground();
+            setCurrentRound((r) => r + 1);
+            setPhase("study");
+            setIsRunning(true);
+            return studyMin * 60;
+          }
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalRef.current);
+  }, [isRunning, phase, currentRound, rounds, studyMin, breakMin]);
+
+  function start() {
+    if (finished) return;
+    setIsRunning(true);
+  }
+
+  function pause() {
+    setIsRunning(false);
+    clearInterval(intervalRef.current);
+  }
+
+  function reset() {
+    setIsRunning(false);
+    clearInterval(intervalRef.current);
+    setPhase("study");
+    setCurrentRound(1);
+    setFinished(false);
+    setSecondsLeft(studyMin * 60);
+  }
+
+  // Sincroniza el temporizador cuando cambia la configuración y no está corriendo
+  useEffect(() => {
+    if (!isRunning && !finished) {
+      setSecondsLeft(phase === "study" ? studyMin * 60 : breakMin * 60);
+    }
+  }, [studyMin, breakMin, phase, isRunning, finished]);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="container">
+      <h1>Pomodoro Tracker 🍅</h1>
+      <h2>Grupo 01 - Prototipo de Sebastian Burgos</h2>
+
+      {/* Config*/}
+      <div className="config">
+        <label>
+          Estudio (min):
+          <input
+            type="number"
+            min={1}
+            max={120}
+            value={studyMin}
+            disabled={isRunning}
+            onChange={(e) => setStudyMin(Math.max(1, Number(e.target.value)))}
+          />
+        </label>
+        <label>
+          Descanso (min):
+          <input
+            type="number"
+            min={1}
+            max={60}
+            value={breakMin}
+            disabled={isRunning}
+            onChange={(e) => setBreakMin(Math.max(1, Number(e.target.value)))}
+          />
+        </label>
+        <label>
+          Repeticiones:
+          <input
+            type="number"
+            min={1}
+            max={20}
+            value={rounds}
+            disabled={isRunning}
+            onChange={(e) => setRounds(Math.max(1, Number(e.target.value)))}
+          />
+        </label>
+      </div>
+
+      {/* Timer */}
+      <div className="timer">
+        <div className="time">{fmt(secondsLeft)}</div>
+        <div className="status">
+          {finished
+            ? "✅ ¡Terminado!"
+            : `${phase === "study" ? "📖 Estudiando" : "☕ Descanso"} — Ronda ${currentRound}/${rounds}`}
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
+
+      {/* Botones */}
+      <div className="buttons">
+        {!isRunning ? (
+          <button className="btn-start" onClick={start} disabled={finished}>
+            Iniciar
+          </button>
+        ) : (
+          <button className="btn-pause" onClick={pause}>
+            Pausar
+          </button>
+        )}
+        <button className="btn-reset" onClick={reset}>
+          Reiniciar
+        </button>
+      </div>
+
+      {/* Progreso */}
+      <div className="progress">
+        Ronda {currentRound} de {rounds}
+      </div>
     </div>
   );
 }
