@@ -1,8 +1,8 @@
-SPRINT 0: INFO104
+# SPRINT 0: INFO104
 
-Prototipo: "Pomodoro Tracker"
+## Prototipo: "Pomodoro Tracker"
 
-Sebastian Burgos Maldonado, Grupo 1
+### Sebastian Burgos Maldonado, Grupo 1
 
 
 
