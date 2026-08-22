@@ -11,7 +11,23 @@ body {
   display: flex;
   justify-content: center;
   padding: 40px 16px;
-  transition: background 2s ease;
+  transition: background 0.4s ease;
+}
+
+body.phase-study {
+  background: #1a1a2e;
+}
+
+body.phase-break {
+  background: #0d3b32;
+}
+
+body.phase-done {
+  background: #1a2e1a;
+}
+
+body.phase-break.countdown-alert {
+  background: #3d2a12;
 }
 
 .container {
@@ -69,6 +85,13 @@ h2 {
 .timer .time {
   font-size: 64px;
   font-family: monospace;
+  transition: font-size 0.25s ease, color 0.25s ease;
+}
+
+.timer.countdown-alert .time {
+  font-size: 96px;
+  font-weight: bold;
+  color: #e74c3c;
 }
 
 .timer .status {

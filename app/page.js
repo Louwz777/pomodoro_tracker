@@ -45,13 +45,29 @@ export default function Home() {
     osc.stop(ctx.currentTime + 0.15);
   }
 
-  // Flash al fondo, luego cambia al color original
-  function flashBackground() {
-    document.body.style.background = "#505069ff";
-    setTimeout(() => {
-      document.body.style.background = "#1a1a2e";
-    }, 300);
-  }
+  const countdownAlert =
+    phase === "break" &&
+    isRunning &&
+    secondsLeft <= 5 &&
+    currentRound < rounds;
+
+  useEffect(() => {
+    const body = document.body;
+    body.classList.remove("phase-study", "phase-break", "phase-done", "countdown-alert");
+    if (finished) {
+      body.classList.add("phase-done");
+    } else if (phase === "break") {
+      body.classList.add("phase-break");
+    } else {
+      body.classList.add("phase-study");
+    }
+    if (countdownAlert) {
+      body.classList.add("countdown-alert");
+    }
+    return () => {
+      body.classList.remove("phase-study", "phase-break", "phase-done", "countdown-alert");
+    };
+  }, [phase, finished, countdownAlert]);
 
   // Format seconds to mm:ss
   function fmt(s) {
@@ -77,7 +93,6 @@ export default function Home() {
           if (phase === "study") {
             // Termina el estudio → comienza el descanso
             playBell();
-            flashBackground();
             setPhase("break");
             setIsRunning(true);
             return breakMin * 60;
@@ -85,13 +100,11 @@ export default function Home() {
             // Termina el descanso → siguiente ronda o termina
             if (currentRound >= rounds) {
               playBell();
-              flashBackground();
               setFinished(true);
               setIsRunning(false);
               return 0;
             }
             playBell();
-            flashBackground();
             setCurrentRound((r) => r + 1);
             setPhase("study");
             setIsRunning(true);
@@ -174,7 +187,7 @@ export default function Home() {
       </div>
 
       {/* Timer */}
-      <div className="timer">
+      <div className={`timer${countdownAlert ? " countdown-alert" : ""}`}>
         <div className="time">{fmt(secondsLeft)}</div>
         <div className="status">
           {finished
