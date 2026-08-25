@@ -9,12 +9,13 @@ Para ver la pagina, clonar el repositorio :
 git clone https://github.com/Louwz777/pomodoro_tracker.git
 ```
 
- y ejecuta :
+y ejecutar :
 ```
 npm run dev
 ```
 
-TODO:
-- [ ] Mejorar interfaz de usuario
-- [ ] Agregar funcionalidad de meta diaria y registro de progreso
+**TODO**:
+- [ ] Mejorar interfaz
+- [ ] Registro de progreso
+- [ ] Agregar funcionalidad de meta diaria
 - [ ] Implementar notificaciones y recordatorios
