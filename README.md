@@ -4,6 +4,17 @@
 
 ### Prototipo de Sebastian Burgos Maldonado
 
+#### NOTA: Este repositorio contiene un prototipo temprano, por lo que las funcionalidades deseadas no estan implementadas aún
+
+***Descripcion:***  
+"Pomodoro Tracker es aplicación web echa en el framework NextJS, que permite a los usuarios llevar un registro de su estudio utilizando la técnica Pomodoro. Cuenta con un temporizador configurable, un historial de sesiones y estadísticas de productividad. La aplicación está diseñada para ayudar a los usuarios a mejorar su enfoque y eficiencia en el estudio."
+
+Capturas:
+<img src="./media/timer.png" alt="Temporizador en funcionamiento" width="320" height="568" style="object-fit: contain;">
+<img src="./media/timerRest.png" alt="Estado de descanso" width="320" height="568" style="object-fit: contain;">
+<img src="./media/timerRestEnd.png" alt="Cuenta regresiva de descanso" width="320" height="568" style="object-fit: contain;">
+
+
 Para ver la pagina, clonar el repositorio :
 ```
 git clone https://github.com/Louwz777/pomodoro_tracker.git
@@ -11,11 +22,19 @@ git clone https://github.com/Louwz777/pomodoro_tracker.git
 
 y ejecutar :
 ```
+# con npm
+npm install
 npm run dev
+
+# con yarn
+yarn install
+yarn dev
 ```
 
 **TODO**:
-- [ ] Mejorar interfaz
-- [ ] Registro de progreso
-- [ ] Agregar funcionalidad de meta diaria
-- [ ] Implementar notificaciones y recordatorios
+
+- Mejorar interfaz
+- Registro de progreso
+- Agregar funcionalidad de meta diaria
+- Implementar notificaciones y recordatorios
+- Graficos diarios de productividad
