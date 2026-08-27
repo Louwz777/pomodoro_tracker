@@ -9,6 +9,7 @@ export default function Home() {
 
   const [secondsLeft, setSecondsLeft] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const [phase, setPhase] = useState("study"); // "study" | "break"
   const [currentRound, setCurrentRound] = useState(1);
   const [finished, setFinished] = useState(false);
@@ -102,6 +103,7 @@ export default function Home() {
               playBell();
               setFinished(true);
               setIsRunning(false);
+              setHasStarted(false);
               return 0;
             }
             playBell();
@@ -121,6 +123,7 @@ export default function Home() {
   function start() {
     if (finished) return;
     setIsRunning(true);
+    setHasStarted(true);
   }
 
   function pause() {
@@ -130,6 +133,7 @@ export default function Home() {
 
   function reset() {
     setIsRunning(false);
+    setHasStarted(false);
     clearInterval(intervalRef.current);
     setPhase("study");
     setCurrentRound(1);
@@ -137,16 +141,16 @@ export default function Home() {
     setSecondsLeft(studyMin * 60);
   }
 
-  // Sincroniza el temporizador cuando cambia la configuración y no está corriendo
+  // Sincroniza el temporizador cuando cambia la configuración y no se ha iniciado
   useEffect(() => {
-    if (!isRunning && !finished) {
+    if (!hasStarted && !finished) {
       setSecondsLeft(phase === "study" ? studyMin * 60 : breakMin * 60);
     }
-  }, [studyMin, breakMin, phase, isRunning, finished]);
+  }, [studyMin, breakMin, phase, hasStarted, finished]);
 
   return (
     <div className="container">
-      {!isRunning && (
+      {!hasStarted && (
         <>
           <h1>Pomodoro Tracker 🍅</h1>
           <h2>Grupo 01 - Prototipo de Sebastian Burgos</h2>
@@ -154,7 +158,7 @@ export default function Home() {
       )}
 
       {/* Config*/}
-      {!isRunning && (
+      {!hasStarted && (
         <div className="config">
           <label>
             Estudio (min):
@@ -193,7 +197,7 @@ export default function Home() {
       )}
 
       {/* Timer */}
-      {isRunning && (
+      {(hasStarted || finished) && (
         <div className={`timer${countdownAlert ? " countdown-alert" : ""}`}>
           <div className="time">{fmt(secondsLeft)}</div>
           <div className="status">
