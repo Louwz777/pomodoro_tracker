@@ -2,8 +2,6 @@
 
 ## Grupo 01: "Pomodoro Tracker"
 
-### Prototipo de Sebastian Burgos Maldonado
-
 #### **DISCLAMER**: Este repositorio contiene una version temprana y muy basica de lo que será el trabajo final, por lo que las funcionalidades deseadas no estan implementadas aún. La idea de este prototipo es para evaluar el diseño de la aplicacion, ademas de la forma que se implementaran las funcionalidades en el proyecto final
 
 ***Descripcion:***  
