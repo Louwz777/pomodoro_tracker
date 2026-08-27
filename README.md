@@ -10,9 +10,22 @@
 "Pomodoro Tracker es aplicación web echa en el framework NextJS, que permite a los usuarios llevar un registro de su estudio utilizando la técnica Pomodoro. Cuenta con un temporizador configurable, un historial de sesiones y estadísticas de productividad. La aplicación está diseñada para ayudar a los usuarios a mejorar su enfoque y eficiencia en el estudio."
 
 Capturas:
-<img src="./media/timer.png" alt="Temporizador en funcionamiento" width="320" height="568" style="object-fit: contain;">
-<img src="./media/timerRest.png" alt="Estado de descanso" width="320" height="568" style="object-fit: contain;">
-<img src="./media/timerRestEnd.png" alt="Cuenta regresiva de descanso" width="320" height="568" style="object-fit: contain;">
+<figure style="margin: 0 0 16px 0;">
+	<img src="./media/menu.png" alt="Pantalla principal del temporizador" width="320" height="568" style="display: block; object-fit: contain;">
+	<figcaption style="margin: 0; padding: 0;">Pantalla principal del temporizador</figcaption>
+</figure>
+<figure style="margin: 0 0 16px 0;">
+	<img src="./media/timer1.png" alt="Temporizador en funcionamiento" width="320" height="568" style="display: block; object-fit: contain;">
+	<figcaption style="margin: 0; padding: 0;">Temporizador en funcionamiento</figcaption>
+</figure>
+<figure style="margin: 0 0 16px 0;">
+	<img src="./media/timerRest.png" alt="Estado de descanso" width="320" height="568" style="display: block; object-fit: contain;">
+	<figcaption style="margin: 0; padding: 0;">Estado de descanso</figcaption>
+</figure>
+<figure style="margin: 0 0 16px 0;">
+	<img src="./media/timerRestEnd.png" alt="Cuenta regresiva de descanso" width="320" height="568" style="display: block; object-fit: contain;">
+	<figcaption style="margin: 0; padding: 0;">Cuenta regresiva de descanso</figcaption>
+</figure>
 
 
 Para ver la pagina, clonar el repositorio :
