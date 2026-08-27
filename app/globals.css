@@ -10,7 +10,9 @@ body {
   color: #eee;
   display: flex;
   justify-content: center;
-  padding: 40px 16px;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px;
   transition: background 0.4s ease;
 }
 
@@ -31,7 +33,7 @@ body.phase-break.countdown-alert {
 }
 
 .container {
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;
 }
 
@@ -79,17 +81,17 @@ h2 {
 /* Timer display */
 .timer {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .timer .time {
-  font-size: 64px;
+  font-size: 160px;
   font-family: monospace;
   transition: font-size 0.25s ease, color 0.25s ease;
 }
 
 .timer.countdown-alert .time {
-  font-size: 96px;
+  font-size: 190px;
   font-weight: bold;
   color: #e74c3c;
 }

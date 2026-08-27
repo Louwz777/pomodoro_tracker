@@ -146,55 +146,63 @@ export default function Home() {
 
   return (
     <div className="container">
-      <h1>Pomodoro Tracker 🍅</h1>
-      <h2>Grupo 01 - Prototipo de Sebastian Burgos</h2>
+      {!isRunning && (
+        <>
+          <h1>Pomodoro Tracker 🍅</h1>
+          <h2>Grupo 01 - Prototipo de Sebastian Burgos</h2>
+        </>
+      )}
 
       {/* Config*/}
-      <div className="config">
-        <label>
-          Estudio (min):
-          <input
-            type="number"
-            min={1}
-            max={120}
-            value={studyMin}
-            disabled={isRunning}
-            onChange={(e) => setStudyMin(Math.max(1, Number(e.target.value)))}
-          />
-        </label>
-        <label>
-          Descanso (min):
-          <input
-            type="number"
-            min={1}
-            max={60}
-            value={breakMin}
-            disabled={isRunning}
-            onChange={(e) => setBreakMin(Math.max(1, Number(e.target.value)))}
-          />
-        </label>
-        <label>
-          Repeticiones:
-          <input
-            type="number"
-            min={1}
-            max={20}
-            value={rounds}
-            disabled={isRunning}
-            onChange={(e) => setRounds(Math.max(1, Number(e.target.value)))}
-          />
-        </label>
-      </div>
+      {!isRunning && (
+        <div className="config">
+          <label>
+            Estudio (min):
+            <input
+              type="number"
+              min={1}
+              max={120}
+              value={studyMin}
+              disabled={isRunning}
+              onChange={(e) => setStudyMin(Math.max(1, Number(e.target.value)))}
+            />
+          </label>
+          <label>
+            Descanso (min):
+            <input
+              type="number"
+              min={1}
+              max={60}
+              value={breakMin}
+              disabled={isRunning}
+              onChange={(e) => setBreakMin(Math.max(1, Number(e.target.value)))}
+            />
+          </label>
+          <label>
+            Repeticiones:
+            <input
+              type="number"
+              min={1}
+              max={20}
+              value={rounds}
+              disabled={isRunning}
+              onChange={(e) => setRounds(Math.max(1, Number(e.target.value)))}
+            />
+          </label>
+        </div>
+      )}
 
       {/* Timer */}
-      <div className={`timer${countdownAlert ? " countdown-alert" : ""}`}>
-        <div className="time">{fmt(secondsLeft)}</div>
-        <div className="status">
-          {finished
-            ? "✅ ¡Terminado!"
-            : `${phase === "study" ? "📖 Estudiando" : "☕ Descanso"} — Ronda ${currentRound}/${rounds}`}
+      {isRunning && (
+        <div className={`timer${countdownAlert ? " countdown-alert" : ""}`}>
+          <div className="time">{fmt(secondsLeft)}</div>
+          <div className="status">
+            {finished
+              ? "¡Sesion terminada!"
+              : `Ronda ${currentRound}/${rounds}`}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Botones */}
       <div className="buttons">
