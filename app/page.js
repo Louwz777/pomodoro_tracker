@@ -203,7 +203,11 @@ export default function Home() {
           <div className="status">
             {finished
               ? "¡Sesion terminada!"
-              : `Ronda ${currentRound}/${rounds}`}
+              : !isRunning
+                ? "Estado : Pausado!"
+                : countdownAlert
+                  ? "A prepararse!"
+                : `${phase === "study" ? "Estado : Trabajo..." : "Estado : Descanso!"}`}
           </div>
         </div>
       )}
