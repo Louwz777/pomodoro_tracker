@@ -9,22 +9,22 @@
 ***Descripcion:***  
 "Pomodoro Tracker es aplicación web echa en el framework NextJS, que permite a los usuarios llevar un registro de su estudio utilizando la técnica Pomodoro. Cuenta con un temporizador configurable, un historial de sesiones y estadísticas de productividad. La aplicación está diseñada para ayudar a los usuarios a mejorar su enfoque y eficiencia en el estudio."
 
-Capturas:
+**- Capturas:**
 <figure style="margin: 0 0 16px 0;">
-	<img src="./media/menu.png" alt="Pantalla principal del temporizador" width="400" height="711" style="display: block; object-fit: contain;">
-	<figcaption style="margin: 0; padding: 0;">Pantalla principal del temporizador</figcaption>
+	<figcaption style="margin: 0 0 4px 0; padding: 0;">Pantalla principal del temporizador</figcaption>
+	<img src="./media/menu.png" alt="Pantalla principal del temporizador" width="480" height="853" style="display: block; object-fit: contain;">
 </figure>
 <figure style="margin: 0 0 16px 0;">
-	<img src="./media/timer1.png" alt="Temporizador en funcionamiento" width="400" height="711" style="display: block; object-fit: contain;">
-	<figcaption style="margin: 0; padding: 0;">Temporizador en funcionamiento</figcaption>
+	<figcaption style="margin: 0 0 4px 0; padding: 0;">Temporizador en funcionamiento</figcaption>
+	<img src="./media/timer1.png" alt="Temporizador en funcionamiento" width="480" height="853" style="display: block; object-fit: contain;">
 </figure>
 <figure style="margin: 0 0 16px 0;">
-	<img src="./media/timerRest.png" alt="Estado de descanso" width="400" height="711" style="display: block; object-fit: contain;">
-	<figcaption style="margin: 0; padding: 0;">Estado de descanso</figcaption>
+	<figcaption style="margin: 0 0 4px 0; padding: 0;">Estado de descanso</figcaption>
+	<img src="./media/timerRest.png" alt="Estado de descanso" width="480" height="853" style="display: block; object-fit: contain;">
 </figure>
 <figure style="margin: 0 0 16px 0;">
-	<img src="./media/timerRestEnd.png" alt="Cuenta regresiva de descanso" width="400" height="711" style="display: block; object-fit: contain;">
-	<figcaption style="margin: 0; padding: 0;">Cuenta regresiva de descanso</figcaption>
+	<figcaption style="margin: 0 0 4px 0; padding: 0;">Cuenta regresiva de descanso</figcaption>
+	<img src="./media/timerRestEnd.png" alt="Cuenta regresiva de descanso" width="480" height="853" style="display: block; object-fit: contain;">
 </figure>
 
 
